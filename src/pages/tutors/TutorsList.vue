@@ -1,5 +1,5 @@
 <template>
-  <section>FILTER</section>
+  <tutor-filter @change-filter="setFilters"></tutor-filter>
   <section>
       <base-card>
         <div class="controls">
@@ -24,18 +24,45 @@
 
 <script>
 import TutorItem from '../../components/tutors/TutorItem.vue'
-
+import TutorFilter from '../../components/tutors/TutorFilter.vue'
 export default {
     components: {
-        TutorItem
+        TutorItem,
+        TutorFilter
+    },
+    data(){
+      return{
+        activeFilters: {
+          frontend: true,
+          backend: true,
+          career: true
+        }
+      }
     },
     computed: {
         filteredTutors(){
-            return this.$store.getters['tutors/tutors']
+            const tutors = this.$store.getters['tutors/tutors']
+            return tutors.filter(tutor => {
+              if(this.activeFilters.frontend && tutor.areas.includes('frontend')){
+                return true
+              }
+              if(this.activeFilters.backend && tutor.areas.includes('backend')){
+                return true
+              }
+              if(this.activeFilters.career && tutor.areas.includes('career')){
+                return true
+              }
+              return false
+            })
         },
         hasTutors(){
             return this.$store.getters['tutors/hasTutors']
         }
+    },
+    methods: {
+      setFilters(updatedFilters){
+        this.activeFilters = updatedFilters
+      }
     }
 }
 </script>
