@@ -9,19 +9,24 @@
 
 <script>
 export default {
-    mode: {
-        type: String,
-        required: false,
-        default: null 
-    },
     props: {
-        link: Boolean,
-        required: false,
-        default: false
+        link: {
+           type: Boolean,
+           required: false,
+           default: false
+        },
+        to: {
+           type: String,
+           required: false,
+           default: '/'
+        },
+        mode: {
+           type: String,
+           required: false,
+           default: null 
+        }
     },
-    to: String,
-    required: false,
-    default: false
+    
 }
 </script>
 
@@ -38,6 +43,7 @@ a {
   border-radius: 30px;
   margin-right: 0.5rem;
   display: inline-block;
+  outline: none;
 }
 
 a:hover,

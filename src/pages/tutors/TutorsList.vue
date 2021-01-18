@@ -3,10 +3,10 @@
   <section>
       <base-card>
         <div class="controls">
-          <button>Refresh</button>
-          <router-link to="/register">Register as Tutor</router-link>
+          <base-button mode="outline">Refresh</base-button>
+          <base-button link to="/register">Register as Tutor</base-button>
       </div>
-      <ul v-if="hasCoaches"> 
+      <ul v-if="hasTutors"> 
         <tutor-item 
         v-for="tutor in filteredTutors" 
         :key="tutor.id"
@@ -33,7 +33,7 @@ export default {
         filteredTutors(){
             return this.$store.getters['tutors/tutors']
         },
-        hasCoaches(){
+        hasTutors(){
             return this.$store.getters['tutors/hasTutors']
         }
     }
