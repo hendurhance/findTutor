@@ -1,7 +1,8 @@
 <template>
   <section>FILTER</section>
   <section>
-      <div class="controls">
+      <base-card>
+        <div class="controls">
           <button>Refresh</button>
           <router-link to="/register">Register as Tutor</router-link>
       </div>
@@ -17,6 +18,7 @@
         ></tutor-item> 
       </ul>
       <h3 v-else>No tutors available.</h3>
+      </base-card>
   </section>
 </template>
 
