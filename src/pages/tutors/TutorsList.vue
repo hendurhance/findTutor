@@ -1,5 +1,7 @@
 <template>
-  <tutor-filter @change-filter="setFilters"></tutor-filter>
+  <section>
+    <tutor-filter @change-filter="setFilters"></tutor-filter>
+  </section>
   <section>
       <base-card>
         <div class="controls">

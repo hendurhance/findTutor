@@ -2,7 +2,7 @@
   <section>
     <base-card>
       <h2> {{ fullName }} </h2>
-      <h3>  ${{ rate }} </h3>
+      <h3>  ${{ rate }}/hour</h3>
     </base-card>
   </section>
   <section>
@@ -48,7 +48,9 @@ export default {
     }
   },
   created() {
-    this.selectedTutor = this.$store.getters['tutors/tutors'].find((tutor) => tutor.id === this.id )
+    this.selectedTutor = this.$store.getters['tutors/tutors'].find(
+      (tutor) => tutor.id === this.id 
+    );
   }
 }
 </script>

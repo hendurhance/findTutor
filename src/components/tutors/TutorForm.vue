@@ -5,7 +5,7 @@
           <input type="text" id="firstname" v-model.trim="firstName">
       </div>
       <div class="form-control">
-          <label for="lastname">lastName</label>
+          <label for="lastname">Lastname</label>
           <input type="text" id="lastname" v-model.trim="lastName">
       </div>
       <div class="form-control">
@@ -20,9 +20,13 @@
           <h3>Skills</h3>
           <div>
               <input type="checkbox" value="frontend" id="frontend" v-model="areas">
-              <label for="frontend">Frontend Developemt</label>
+              <label for="frontend">Frontend Development</label>
+          </div>
+          <div>
               <input type="checkbox" value="backend" id="backend" v-model="areas">
-              <label for="backend">Backend Developemt</label>
+              <label for="backend">Backend Development</label>
+          </div>
+          <div>
               <input type="checkbox" value="career" id="career" v-model="areas">
               <label for="career">Career Advisor</label>
           </div>
@@ -33,6 +37,7 @@
 
 <script>
 export default {
+    emits: ['save-data'],
     data(){
         return{
             firstName: '',
@@ -52,7 +57,7 @@ export default {
                 areas: this.areas
             }
 
-            console.log(formData)
+            this.$emit('save-data', formData)
         }
     }
 }
