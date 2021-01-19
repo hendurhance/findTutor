@@ -30,14 +30,19 @@ export default {
 
       if(
         this.email === '' || 
-        this.email.includes('@') || 
+        !this.email.includes('@') || 
         this.message === ''
         ){
         this.formIsValid = false
         return
       }
+      this.$store.dispatch('requests/contactTutor', {
+        email: this.email,
+        message: this.message,
+        coachId: this.$route.params.id
+      });
+      this.$router.replace('/tutors')
 
-      
     }
   }
 }
