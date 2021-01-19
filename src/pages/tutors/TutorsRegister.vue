@@ -16,9 +16,11 @@ export default {
   },
   methods: {
     saveData(data){
-      this.$store.dispatch('tutors/registerTutor', data)
+      this.$store.dispatch('tutors/registerTutor', data);
+      this.$router.replace('/tutors')
     }
-  }
+  },
+
 }
 </script>
 
