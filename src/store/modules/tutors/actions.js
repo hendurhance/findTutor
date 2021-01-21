@@ -1,7 +1,7 @@
 export default {
-    registerTutor(context, data){
+    async registerTutor(context, data){
+        const userId = context.rootGetters.userId
         const tutorData = {
-            id: context.rootGetters.userId,
             firstName: data.first,
             lastName: data.last,
             description: data.desc,
@@ -9,6 +9,20 @@ export default {
             areas: data.areas
         };
 
-        context.commit('registerTutor', tutorData)
+        const response = await fetch(`https://findtutor-vue-default-rtdb.firebaseio.com/tutors/${userId}.json`, {
+            method: 'PUT',
+            body: JSON.stringify(tutorData)
+        })
+
+        // const responseData = await response.json()
+
+        if(!response.ok){
+            // error
+        }
+
+        context.commit('registerTutor', {
+            ...tutorData,
+            id: userId
+        })
     }
 }
