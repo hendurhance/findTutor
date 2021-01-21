@@ -1,10 +1,12 @@
 <template>
+ <div>
   <section>
     <base-card>
       <h2>Register as a Tutor</h2>
       <tutor-form @save-data="saveData"></tutor-form>
     </base-card>
   </section>
+ </div>
 </template>
 
 <script>
