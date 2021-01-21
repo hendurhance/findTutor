@@ -24,5 +24,29 @@ export default {
             ...tutorData,
             id: userId
         })
+    },
+    async loadTutors(context){
+        const response = await fetch(
+           `https://findtutor-vue-default-rtdb.firebaseio.com/tutors.json`
+        )
+        const responseData = await response.json()
+
+        if(!response.ok){
+            //error
+        }
+
+        const tutors = []
+        for(const key in responseData){
+            const tutor = {
+                id: key,
+                firstName: responseData[key].firstName,
+                lastName: responseData[key].lastName,
+                description: responseData[key].description,
+                hourlyRate: responseData[key].hourlyRate,
+                areas: responseData[key].areas
+            }
+            tutors.push(tutor)
+        }
+        context.commit('setTutors', tutors)
     }
 }

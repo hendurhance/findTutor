@@ -5,7 +5,7 @@
   <section>
       <base-card>
         <div class="controls">
-          <base-button mode="outline">Refresh</base-button>
+          <base-button mode="outline" @click="loadTutors">Refresh</base-button>
           <base-button v-if="!isTutor" link to="/register">Register as Tutor</base-button>
       </div>
       <ul v-if="hasTutors"> 
@@ -64,9 +64,15 @@ export default {
             return this.$store.getters['tutors/hasTutors']
         }
     },
+    created(){
+      this.loadTutors()
+    },
     methods: {
       setFilters(updatedFilters){
         this.activeFilters = updatedFilters
+      },
+      loadTutors(){
+        this.$store.dispatch('tutors/loadTutors')
       }
     }
 }
