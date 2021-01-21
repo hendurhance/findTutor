@@ -56,10 +56,10 @@ export default {
         this.error = error.message || 'Nerd, something went wrong'
       }
       this.isLoading = false
-    }
-  },
-  handleError(){
+    },
+    handleError(){
     this.error = null
+   }
   }
 }
 </script>
