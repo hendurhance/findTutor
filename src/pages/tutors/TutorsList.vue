@@ -6,9 +6,12 @@
       <base-card>
         <div class="controls">
           <base-button mode="outline" @click="loadTutors">Refresh</base-button>
-          <base-button v-if="!isTutor" link to="/register">Register as Tutor</base-button>
+          <base-button v-if="!isTutor && !isLoading" link to="/register">Register as Tutor</base-button>
       </div>
-      <ul v-if="hasTutors"> 
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <ul v-else-if="hasTutors"> 
         <tutor-item 
         v-for="tutor in filteredTutors" 
         :key="tutor.id"
@@ -27,6 +30,7 @@
 <script>
 import TutorItem from '../../components/tutors/TutorItem.vue'
 import TutorFilter from '../../components/tutors/TutorFilter.vue'
+
 export default {
     components: {
         TutorItem,
@@ -34,6 +38,7 @@ export default {
     },
     data(){
       return{
+        isLoading: false,
         activeFilters: {
           frontend: true,
           backend: true,
@@ -61,7 +66,7 @@ export default {
             })
         },
         hasTutors(){
-            return this.$store.getters['tutors/hasTutors']
+            return !this.isLoading && this.$store.getters['tutors/hasTutors']
         }
     },
     created(){
@@ -71,8 +76,10 @@ export default {
       setFilters(updatedFilters){
         this.activeFilters = updatedFilters
       },
-      loadTutors(){
-        this.$store.dispatch('tutors/loadTutors')
+      async loadTutors(){
+        this.isLoading = true
+        await this.$store.dispatch('tutors/loadTutors')
+        this.isLoading = false
       }
     }
 }
