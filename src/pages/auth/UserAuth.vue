@@ -1,16 +1,17 @@
 <template>
     <base-card>
-        <form>
+        <form @submit.prevent="submitForm">
             <div class="form-control">
                 <label for="email">Email</label>
-                <input type="email" id="email">
+                <input type="email" id="email" v-model.trim="email">
             </div>
             <div class="form-control">
                 <label for="password">Password</label>
-                <input type="password" id="password">
+                <input type="password" id="password" v-model.trim="password">
             </div>
-            <base-button>Login</base-button>
-            <base-button type="button" mode="flat">Not a member?</base-button>
+            <p v-if="!formIsValid">Please enter a valid email address and password length should be greater than 6</p>
+            <base-button>{{ submitBtnCaption }}</base-button>
+            <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeBtn }}</base-button>
         </form>
     </base-card>
 </template>
@@ -20,7 +21,45 @@ export default {
     data(){
         return{
             email: '',
-            password: ''
+            password: '',
+            formIsValid: true,
+            mode: 'Login'
+        }
+    },
+    computed: {
+        submitBtnCaption(){
+            if(this.mode === 'login'){
+                return 'Login'
+            }else{
+                return 'Signup'
+            }
+        },
+        switchModeBtn(){
+            if(this.mode === 'login'){
+                return "You're not a Member?"
+            }else{
+                return 'Nerd, Login?'
+            }
+        }
+    },
+    methods: {
+        submitForm(){
+            this.formIsValid = true 
+            if(
+                this.email === '' || 
+                !this.email.includes('@') ||
+                 this.password.length < 6
+            ){
+                this.formIsValid = false
+                return
+            }
+        },
+        switchAuthMode(){
+            if(this.mode === 'login'){
+                this.mode = 'signup'
+            }else{
+                this.mode = 'login'
+            }
         }
     }
 }
