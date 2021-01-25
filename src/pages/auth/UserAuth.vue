@@ -1,4 +1,11 @@
 <template>
+ <div>
+     <base-dialog :show="!!error" title="Error occured Nerd" @close="handleError">
+        <p> {{ error }} </p>
+     </base-dialog>
+    <base-dialog :show="isLoading" title="Authenticate..." fixed>
+        <base-spinner></base-spinner>
+    </base-dialog>
     <base-card>
         <form @submit.prevent="submitForm">
             <div class="form-control">
@@ -14,6 +21,7 @@
             <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeBtn }}</base-button>
         </form>
     </base-card>
+ </div>
 </template>
 
 <script>
@@ -23,7 +31,9 @@ export default {
             email: '',
             password: '',
             formIsValid: true,
-            mode: 'Login'
+            mode: 'Login',
+            isLoading: false,
+            error: null
         }
     },
     computed: {
@@ -43,7 +53,7 @@ export default {
         }
     },
     methods: {
-        submitForm(){
+        async submitForm(){
             this.formIsValid = true 
             if(
                 this.email === '' || 
@@ -54,14 +64,23 @@ export default {
                 return
             }
 
-            if(this.mode === 'login'){
-                // error
-            }else{
-                this.$store.dispatch('signup', {
-                    email: this.email,
-                    password: this.password
-                })
+            this.isLoading = true
+
+            try {
+                if(this.mode === 'login'){
+                    // error
+                }else{
+                    await this.$store.dispatch('signup', {
+                        email: this.email,
+                        password: this.password
+                    })
+                }
+            } catch (err) {
+                this.error = err.message || 'Failed to authenticate, check input'
             }
+
+
+            this.isLoading  = false
         },
         switchAuthMode(){
             if(this.mode === 'login'){
@@ -69,6 +88,9 @@ export default {
             }else{
                 this.mode = 'login'
             }
+        },
+        handleError(){
+            this.error = null
         }
     }
 }
