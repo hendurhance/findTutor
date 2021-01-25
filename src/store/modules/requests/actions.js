@@ -22,7 +22,8 @@ export default{
     },
     async fetchRequests(context){
         const tutorId = context.rootGetters.userId
-        const response = await fetch(`https://findtutor-vue-default-rtdb.firebaseio.com/requests/${tutorId}.json`)
+        const token = context.rootGetters.token
+        const response = await fetch(`https://findtutor-vue-default-rtdb.firebaseio.com/requests/${tutorId}.json?auth=` + token)
         const responseData = await response.json()
 
         if(!response.ok){

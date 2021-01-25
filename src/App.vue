@@ -14,6 +14,21 @@ export default {
   name: 'App',
   components: {
     TheHeader,
+  },
+  computed: {
+    alreadyAutoLogout() {
+      return this.$store.getters.alreadyAutoLogout
+    }
+  },
+  created(){
+    this.$store.dispatch('autoLogin')
+  },
+  watch: {
+    alreadyAutoLogout(curValue, oldValue){
+      if(curValue && curValue != oldValue){
+        this.$router.replace('/tutors')
+      }
+    }
   }
 }
 </script>

@@ -9,7 +9,9 @@ export default {
             areas: data.areas
         };
 
-        const response = await fetch(`https://findtutor-vue-default-rtdb.firebaseio.com/tutors/${userId}.json`, {
+        const token = context.rootGetters.token
+
+        const response = await fetch(`https://findtutor-vue-default-rtdb.firebaseio.com/tutors/${userId}.json?auth=` + token, {
             method: 'PUT',
             body: JSON.stringify(tutorData)
         })
