@@ -31,7 +31,7 @@ export default {
             email: '',
             password: '',
             formIsValid: true,
-            mode: 'Login',
+            mode: 'login',
             isLoading: false,
             error: null
         }
